@@ -19,9 +19,9 @@ string prompt = "What is the state flower of Washington? Be as brief and only te
 
 var settings = new OpenAIPromptExecutionSettings
 {
-    MaxTokens = 100,
-    Temperature = .7,
-    TopP = .5
+    MaxTokens = 1000,
+    Temperature = .3,
+    TopP = .1
 };
 var kernelArguments = new KernelArguments(settings);
 
@@ -36,7 +36,7 @@ Console.WriteLine();
 var chatService = sk.GetRequiredService<IChatCompletionService>();
 
 var history = new ChatHistory();
-history.AddSystemMessage("You are a useful chatbot. If you don't know an answer, say 'I don't know!'. Always reply in a funny ways. Use emojis if possible.");
+history.AddSystemMessage("You are a useful chatbot that provides brief answers. If you don't know an answer, say 'I don't know!'. Use emojis if possible.");
 
 while (true)
 {

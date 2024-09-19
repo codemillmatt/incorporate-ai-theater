@@ -102,7 +102,7 @@ So far you've built an app that lets you ask a predefined question. How much mor
     var chatService = sk.GetRequiredService<IChatCompletionService>();
 
     var history = new ChatHistory();
-    history.AddSystemMessage("You are a useful chatbot. If you don't know an answer, say 'I don't know!'. Always reply in a funny ways. Use emojis if possible.");
+    history.AddSystemMessage("You are a useful chatbot that provides brief answers. If you don't know an answer, say 'I don't know!'. Use emojis if possible.");
     ```
 
     Here we are having Semantic Kernel give us an object that will work with Phi-3 for chatting. Then we are adding a system message - or telling the model what we want the chat to be about - in the chat history.
