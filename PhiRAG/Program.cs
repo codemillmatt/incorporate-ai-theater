@@ -30,7 +30,7 @@ using Microsoft.SemanticKernel.Connectors.OpenAI;
 var builder = Kernel.CreateBuilder();
 builder.AddOpenAIChatCompletion(
     modelId: "phi3.5",
-    endpoint: new Uri("http://localhost:11434"),
+    endpoint: new Uri("http://127.0.0.1:11434"),
     apiKey: "apikey");
 var kernel = builder.Build();
 
