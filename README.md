@@ -1,81 +1,35 @@
-_This workshop was inspired by and fully based on the [Full Local RAG Scenario using Phi-3, Semantic Kernel, and Text Memory](https://github.com/microsoft/Phi-3CookBook/blob/main/md/07.Labs/CsharpOllamaCodeSpaces/src/Sample03/readme.md), it has been shortened down to fit the time constraints of the workshop._
-
 # Incorpoating AI into a .NET Application
+
+When building intelligent apps, you can build them with .NET.
+
+And you don't need to use the massive LLMs like OpenAI's GPT 4 to do so. In this short example, we'll walk you through how to add AI to your .NET application using Microsoft's Phi-3 small language model (SLM).
 
 ## Introduction
 
-Welcome to the repository for the full local RAG scenario using Phi-3, SemanticKernel, and TextMemory. This project demonstrates the power of Phi-3, a groundbreaking Small Language Model (SLM) that is redefining AI capabilities for developers and businesses.
+In this sample you're going to learn how to add intelligence to a .NET application using Semantic Kernel and Microsoft's open source Phi-3 model.
 
-## Scenario Overview
+Using Phi-3 is great because it will allow you to add the AI without needing to use a full-fledged LLM. And even better, all you need to run this sample is Docker or GitHub Codespaces.
 
-The demo scenario is designed to answer the question, "What is Bruno's favourite super hero?" using two different approaches:
+And because we're using Semantic Kernel - the code we'll create will be the same regardless if we were using one of OpenAI's models, one found on GitHub Models, or Phi-3. The Semantic Kernel SDK will abstract away all of those implementation details so we can work on what matters to us most - our business code.
 
-1. Directly asking the Phi-3 model.
-2. Adding a semantic memory object with fan facts loaded and then asking the question.
+## Getting started
 
-## Importance of Full Scenario
+The easiest way to get stated is to open this repository up in GitHub Codespaces.
 
-Phi-3 represents a significant leap in Small Language Models, offering a unique blend of performance and efficiency. It is capable of handling full scenarios independently, which simplifies the development process and reduces integration complexities.
+Or if you prefer to run everything locally. Clone this repo. Start up Docker. Then open the containing folder in VS Code. When prompted if you want to reopen it in a DevContainer, pick yes.
 
-## Code Explanation
+The DevContainer / Codespace already has everything installed that you will need to work with .NET and Phi-3.
 
-The console application demonstrates the use of a local model hosted in Ollama and semantic memory for search. The program uses several external libraries for dependency injection, configuration, and semantic kernel and memory functionalities.
+## Simple text completions
 
-## How to Test
+The first thing we want to do is add in text completions. A text completion is asking the model a question and having it provide an answer.
 
-1. Open a terminal and navigate to the current project.
+A starter .NET console application has been provided in the **src** directory.
 
-    ```bash
-    cd .\src\Sample03\
-    ```
+1. We need to add a reference to the Semantic Kernel NuGet package. Open a terminal, change to **src** directory and type: `dotnet add package Microsoft.SemanticKernel`
+1. 
 
-1. Run the project with the command
-
-    ```bash
-    dotnet run
-    ```
-
-1. The project `Sample03`, answer the following question:
-
-    ```csharp
-    var question = "What is Bruno's favourite super hero?"
-    ```
-
-1. First the question is asked directly to the Phi-3 Model. Then, the program load the following information in a Text Memory, and ask the question again.
-
-    ```csharp
-
-    // get the embeddings generator service
-    var embeddingGenerator = kernel.Services.GetRequiredService<ITextEmbeddingGenerationService>();
-    var memory = new SemanticTextMemory(new VolatileMemoryStore(), embeddingGenerator);    
-
-    // add facts to the collection
-    const string MemoryCollectionName = "fanFacts";
-    
-    await memory.SaveInformationAsync(MemoryCollectionName, id: "info1", 
-            text: "Gisela's favourite super hero is Batman");
-    await memory.SaveInformationAsync(MemoryCollectionName, id: "info2", 
-            text: "The last super hero movie watched by Gisela was Guardians of the Galaxy Vol 3");
-    await memory.SaveInformationAsync(MemoryCollectionName, id: "info3", 
-            text: "Bruno's favourite super hero is Invincible");
-    await memory.SaveInformationAsync(MemoryCollectionName, id: "info4", 
-            text: "The last super hero movie watched by Bruno was Aquaman II");
-    await memory.SaveInformationAsync(MemoryCollectionName, id: "info5", 
-            text: "Bruno don't like the super hero movie: Eternals");    
-    ```
-
-1. Once the text memory is ready, it's loaded into the kernel as a plugin.
-
-    ```csharp
-    TextMemoryPlugin memoryPlugin = new(memory);
-    
-    // Import the text memory plugin into the Kernel.
-    kernel.ImportPluginFromObject(memoryPlugin);    
-    ```
-
-1. Here is the demo console application running in a Codespace:
-
-    ![Demo console application running in a Codespace](./img/10RAGPhi3.gif)
+## Add chat history
 
 ## References
 
